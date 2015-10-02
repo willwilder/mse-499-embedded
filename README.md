@@ -1,5 +1,5 @@
 to download program to MCU:
-lpc21isp /home/will/nxpworkspace/LPC810_CodeBase/Release/LPC810_CodeBase.hex /dev/ttyUSB0 115200 12000
+lpc21isp ~/nxpworkspace/LPC810_CodeBase/Release/LPC810_CodeBase.hex /dev/ttyUSB0 115200 12000
 
 set uart speed:
 stty -F /dev/ttyUSB0 115200
