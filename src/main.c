@@ -188,35 +188,18 @@ void resetPID(struct PID *myPID){
 }
 
 void printStatus(struct PID *myPID){
-	/*printf(
-		"ProcessRunning=%d\n"
-		"SP=%d\nPV=%d\n"
-		"Kp=%d\nKi=%d\nKd=%d\n"
-		"Error=%d\nPError=%d\n"
-		"Integral=%d\n"
-		"Derivative=%d\n"
-		"Output=%d\n",
+	printf("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
 		myPID->processRunning,
-		myPID->SP,myPID->PV,
-		myPID->Kp,myPID->Ki,myPID->Kd,
-		myPID->error,myPID->prevError,
+		myPID->SP,
+		myPID->PV,
+		myPID->Kp,
+		myPID->Ki,
+		myPID->Kd,
+		myPID->error,
+		myPID->prevError,
 		myPID->integral,
 		myPID->derivative,
-		myPID->output
-		);*/
-
-	printf("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
-			myPID->processRunning,
-			myPID->SP,
-			myPID->PV,
-			myPID->Kp,
-			myPID->Ki,
-			myPID->Kd,
-			myPID->error,
-			myPID->prevError,
-			myPID->integral,
-			myPID->derivative,
-			myPID->output);
+		myPID->output);
 
 }
 
@@ -245,12 +228,6 @@ int main(void)
   int printInterval = 500;
   int lastPrintTime=0;
 
-
-
-  //char stringComplete = 0;
-
-  //PID Variables
-  //int processRunning = 0;
   int lastPIDTime=0;
   int PIDInterval = 100;
 
@@ -290,10 +267,6 @@ int main(void)
 
 	  }
 
-	  /*
-	  if(!myPID.processRunning){
-		  setOutput(0);
-	  }*/
 
 	  while(uart0DataPresent())
 	  {
@@ -336,7 +309,6 @@ int main(void)
 					  if(!myPID.processRunning){
 						  setOutput(0);
 					  }
-					  //printf("ProcessRunning = %d\n",myPID.processRunning);
 					  break;
 		  	  	  case 'P':
 		  	  		  myPID.Kp = buffer[1];
