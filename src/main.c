@@ -5,7 +5,7 @@
     @section LICENSE
 
     Software License Agreement (BSD License)
-
+    Copyright (c) 2015, W. Wilder
     Copyright (c) 2013, K. Townsend (microBuilder.eu)
     All rights reserved.
 
