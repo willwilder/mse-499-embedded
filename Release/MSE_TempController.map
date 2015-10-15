@@ -299,25 +299,25 @@ END GROUP
                 0x10000400                PROVIDE (_vStackTop, (__top_RamLoc1 - 0x0))
 OUTPUT(MSE_TempController.axf elf32-littlearm)
 
-.debug_info     0x00000000     0x2c7d
+.debug_info     0x00000000     0x2c7c
  .debug_info    0x00000000      0x360 ./src/cr_startup_lpc8xx.o
  .debug_info    0x00000360      0x69b ./src/gpio.o
- .debug_info    0x000009fb      0x98b ./src/main.o
- .debug_info    0x00001386      0x775 ./src/mrt.o
- .debug_info    0x00001afb       0xff ./src/printf-retarget.o
- .debug_info    0x00001bfa      0x377 ./src/printf.o
- .debug_info    0x00001f71      0x50a ./src/system_LPC8xx.o
- .debug_info    0x0000247b      0x802 ./src/uart.o
+ .debug_info    0x000009fb      0x98a ./src/main.o
+ .debug_info    0x00001385      0x775 ./src/mrt.o
+ .debug_info    0x00001afa       0xff ./src/printf-retarget.o
+ .debug_info    0x00001bf9      0x377 ./src/printf.o
+ .debug_info    0x00001f70      0x50a ./src/system_LPC8xx.o
+ .debug_info    0x0000247a      0x802 ./src/uart.o
 
-.debug_abbrev   0x00000000      0xaec
+.debug_abbrev   0x00000000      0xadd
  .debug_abbrev  0x00000000      0x146 ./src/cr_startup_lpc8xx.o
  .debug_abbrev  0x00000146      0x13d ./src/gpio.o
- .debug_abbrev  0x00000283      0x238 ./src/main.o
- .debug_abbrev  0x000004bb      0x174 ./src/mrt.o
- .debug_abbrev  0x0000062f       0xab ./src/printf-retarget.o
- .debug_abbrev  0x000006da      0x194 ./src/printf.o
- .debug_abbrev  0x0000086e       0xdf ./src/system_LPC8xx.o
- .debug_abbrev  0x0000094d      0x19f ./src/uart.o
+ .debug_abbrev  0x00000283      0x229 ./src/main.o
+ .debug_abbrev  0x000004ac      0x174 ./src/mrt.o
+ .debug_abbrev  0x00000620       0xab ./src/printf-retarget.o
+ .debug_abbrev  0x000006cb      0x194 ./src/printf.o
+ .debug_abbrev  0x0000085f       0xdf ./src/system_LPC8xx.o
+ .debug_abbrev  0x0000093e      0x19f ./src/uart.o
 
 .debug_loc      0x00000000      0xfc1
  .debug_loc     0x00000000      0x390 ./src/cr_startup_lpc8xx.o
@@ -357,15 +357,15 @@ OUTPUT(MSE_TempController.axf elf32-littlearm)
  .debug_ranges  0x00000190       0x18 ./src/system_LPC8xx.o
  .debug_ranges  0x000001a8       0x50 ./src/uart.o
 
-.debug_line     0x00000000      0xb95
+.debug_line     0x00000000      0xb8d
  .debug_line    0x00000000       0xdf ./src/cr_startup_lpc8xx.o
  .debug_line    0x000000df      0x14c ./src/gpio.o
- .debug_line    0x0000022b      0x226 ./src/main.o
- .debug_line    0x00000451      0x162 ./src/mrt.o
- .debug_line    0x000005b3       0x6d ./src/printf-retarget.o
- .debug_line    0x00000620      0x244 ./src/printf.o
- .debug_line    0x00000864      0x16b ./src/system_LPC8xx.o
- .debug_line    0x000009cf      0x1c6 ./src/uart.o
+ .debug_line    0x0000022b      0x21e ./src/main.o
+ .debug_line    0x00000449      0x162 ./src/mrt.o
+ .debug_line    0x000005ab       0x6d ./src/printf-retarget.o
+ .debug_line    0x00000618      0x244 ./src/printf.o
+ .debug_line    0x0000085c      0x16b ./src/system_LPC8xx.o
+ .debug_line    0x000009c7      0x1c6 ./src/uart.o
 
 .debug_str      0x00000000      0xaf0
  .debug_str     0x00000000      0x205 ./src/cr_startup_lpc8xx.o
