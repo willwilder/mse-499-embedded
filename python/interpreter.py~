@@ -259,7 +259,7 @@ class Miniterm(object):
         time.sleep(.1)
         self.serial.write(chr(PID.SP))
         time.sleep(.1)
-        self.serial.write('\n')
+        self.serial.write('\x0a')
             
     def dump_port_settings(self):
         sys.stderr.write("\n--- Settings: %s  %s,%s,%s,%s\n" % (

@@ -1,5 +1,5 @@
 #PID Parameters limited to range 0-255
-Kp = 50
-Ki = 1
-Kd = 100
+Kp = 30
+Ki = 2
+Kd = 150
 SP = 125
