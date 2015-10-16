@@ -357,15 +357,15 @@ OUTPUT(MSE_TempController.axf elf32-littlearm)
  .debug_ranges  0x00000190       0x18 ./src/system_LPC8xx.o
  .debug_ranges  0x000001a8       0x50 ./src/uart.o
 
-.debug_line     0x00000000      0xb8d
+.debug_line     0x00000000      0xb8e
  .debug_line    0x00000000       0xdf ./src/cr_startup_lpc8xx.o
  .debug_line    0x000000df      0x14c ./src/gpio.o
- .debug_line    0x0000022b      0x21e ./src/main.o
- .debug_line    0x00000449      0x162 ./src/mrt.o
- .debug_line    0x000005ab       0x6d ./src/printf-retarget.o
- .debug_line    0x00000618      0x244 ./src/printf.o
- .debug_line    0x0000085c      0x16b ./src/system_LPC8xx.o
- .debug_line    0x000009c7      0x1c6 ./src/uart.o
+ .debug_line    0x0000022b      0x21f ./src/main.o
+ .debug_line    0x0000044a      0x162 ./src/mrt.o
+ .debug_line    0x000005ac       0x6d ./src/printf-retarget.o
+ .debug_line    0x00000619      0x244 ./src/printf.o
+ .debug_line    0x0000085d      0x16b ./src/system_LPC8xx.o
+ .debug_line    0x000009c8      0x1c6 ./src/uart.o
 
 .debug_str      0x00000000      0xaf0
  .debug_str     0x00000000      0x205 ./src/cr_startup_lpc8xx.o
