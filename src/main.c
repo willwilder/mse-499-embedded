@@ -255,7 +255,7 @@ int main(void)
 
 		  myPID.output =
 				  myPID.Kp * myPID.error +
-				  myPID.Ki / myPID.integral +
+				  myPID.integral / myPID.Ki +
 				  myPID.Kd * myPID.derivative;
 
 		  myPID.prevError = myPID.error;
