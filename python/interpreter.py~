@@ -194,6 +194,8 @@ class Miniterm(object):
         self.previous_process_runnning = False
         self.csv_active = False
         self.current_csv_path = ""
+        self.curent_temperature = ""
+        self._recipe_alive = False
 
     def _start_reader(self):
         """Start reader thread"""
@@ -226,14 +228,25 @@ class Miniterm(object):
         if not transmit_only:
             self.receiver_thread.join()
     
-    
-    
-    
+    def _start_recipe(self):
+        """Start recipe thread"""
+        self._recipe_alive = True
+        self.recipe_thread = threading.Thread(target=self.run_recipe)
+        print "starting recipe"
+        self.recipe_thread.setDaemon(True)
+        self.recipe_thread.start()
+
+    def _stop_recipe(self):
+        """Stop recipe thread only, wait for clean exit of thread"""
+        self._recipe_alive = False
+        self.recipe_thread.join()
+        print "stopping recipe"
+        #self.stop_process()
+
+        
     def downloadPIDParameters(self):
         reload(PID)
         print(PID.Kp)
-        if PID.Ki == 0:
-            PID.Ki = 1
         print(PID.Ki)
         print(PID.Kd)
         #self.serial.write(pack('ccc','P',chr(PID.Kp),'\n'))
@@ -255,11 +268,29 @@ class Miniterm(object):
         time.sleep(.1)
         self.serial.write('\n')
         time.sleep(.1)
+        self.update_setpoint(PID.SP)
+    
+    def run_process(self):
+        self.serial.write('r')
+        time.sleep(.1)
+        self.serial.write('1')
+        time.sleep(.1)
+        self.serial.write('\n')
+
+    def stop_process(self):
+        self.serial.write('r')
+        time.sleep(.1)
+        self.serial.write('\n')        
+        #print "stopping process"
+
+    #setpoint setter
+    #takes an integer setpoint
+    def update_setpoint(self, setpoint):
         self.serial.write('S')
         time.sleep(.1)
-        self.serial.write(chr(PID.SP))
+        self.serial.write(chr(setpoint))
         time.sleep(.1)
-        self.serial.write('\x0a')
+        self.serial.write('\n')  
             
     def dump_port_settings(self):
         sys.stderr.write("\n--- Settings: %s  %s,%s,%s,%s\n" % (
@@ -293,8 +324,20 @@ class Miniterm(object):
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(data)
     
-    def reader(self):
-        
+    def run_recipe(self):
+        #try:
+        PID.currentSP = self.current_temperature - (self.current_temperature %10)+PID.rate
+        self.update_setpoint(PID.currentSP)
+        self.run_process()
+        print "currentSP: " + str(PID.currentSP)
+        while(self._recipe_alive and PID.currentSP =< PID.target):
+            time.sleep(10)
+            PID.currentSP += PID.rate
+            self.update_setpoint(PID.currentSP) 
+        self.stop_process()
+        print "run over"
+
+    def reader(self):   
         try:
             while self.alive and self._reader_alive:
                 line = self.serial.readline().strip()
@@ -307,20 +350,19 @@ class Miniterm(object):
                 
                 if (not self.previous_process_runnning and self.process_running):
                     print "rising edge"
-                    self.current_csv_path = os.getcwd()+"/data/"+str(time.time())+"data.csv"
+                    self.current_csv_path = os.getcwd()+"/data/"+"Kp"+str(PID.Kp)+" Ki"+str(PID.Ki)+" Kd"+str(PID.Kd)+" "+str(time.time())+".csv"
                     print(self.current_csv_path)
                     self.csv_writer(CSV_HEADER.split(","),self.current_csv_path)
                     self.csv_active = True
                 elif (not self.process_running and self.previous_process_runnning):
                     print "falling edge"
                     self.csv_active = False
-                #else:
-                    #print "steady state"
+                
+                self.current_temperature = int(process_data[2])
                     
                 if self.csv_active:
                     self.csv_writer(process_data,self.current_csv_path)
                     
-                #print ("Process Running:"+str(self.process_running))
                 self.previous_process_runnning = self.process_running
 
         except serial.SerialException, e:
@@ -348,35 +390,30 @@ class Miniterm(object):
                         self.serial.write(b)                    # send character
                         if self.echo:
                             sys.stdout.write(c)
-                    elif c == '\x15':                       # CTRL+U -> upload file
-                        sys.stderr.write('\n--- File to upload: ')
-                        sys.stderr.flush()
-                        console.cleanup()
-                        filename = sys.stdin.readline().rstrip('\r\n')
-                        if filename:
-                            try:
-                                file = open(filename, 'r')
-                                sys.stderr.write('--- Sending file %s ---\n' % filename)
-                                while True:
-                                    line = file.readline().rstrip('\r\n')
-                                    if not line:
-                                        break
-                                    self.serial.write(line)
-                                    self.serial.write('\r\n')
-                                    # Wait for output buffer to drain.
-                                    self.serial.flush()
-                                    sys.stderr.write('.')   # Progress indicator.
-                                sys.stderr.write('\n--- File %s sent ---\n' % filename)
-                            except IOError, e:
-                                sys.stderr.write('--- ERROR opening file %s: %s ---\n' % (filename, e))
-                        console.setup()
+                    elif c == '\x15':                       # CTRL+U -> upload recipe
+                        print "recipe alive: " + str(self._recipe_alive)
+                        self._start_recipe()
+                        #if self._recipe_alive:
+                         #   self._stop_recipe()
+                          #  self.stop_process
+                        #else:
+                         #   print "starting recipe fadlsdf"
+                          #  self._start_recipe()
+                        #self.printit()
+                        #self.update_setpoint(100)
+                    elif c == '\x10':                       # CTRL+P -> Run Process
+                        if not self.process_running:
+                            self.run_process()
+                        else:
+                            self.stop_process()
+                        self.process_running = not self.process_running
+                        print "Process State: " + (self.process_running and "Running" or "Stopped")    
+                    
                     elif c in '\x08hH?':                    # CTRL+H, h, H, ? -> Show help
                         sys.stderr.write(get_help_text())
                     elif c == '\x12':                       # CTRL+R -> Refresh PID Parameters
                         self.downloadPIDParameters()
-                        #self.rts_state = not self.rts_state
-                        #self.serial.setRTS(self.rts_state)
-                        #sys.stderr.write('--- RTS %s ---\n' % (self.rts_state and 'active' or 'inactive'))
+                        
                     elif c == '\x04':                       # CTRL+D -> Toggle DTR
                         self.dtr_state = not self.dtr_state
                         self.serial.setDTR(self.dtr_state)

@@ -250,13 +250,14 @@ int main(void)
 
 		  myPID.PV = readCelsius();
 		  myPID.error = myPID.SP - myPID.PV;
-		  myPID.integral += myPID.error * PIDInterval;
+		  myPID.integral += myPID.error;// * PIDInterval;
 		  myPID.derivative = (myPID.error - myPID.prevError);
 
 		  myPID.output =
 				  myPID.Kp * myPID.error +
-				  myPID.integral / myPID.Ki +
 				  myPID.Kd * myPID.derivative;
+
+		  if(myPID.Ki!=0) myPID.output += (myPID.integral / myPID.Ki);
 
 		  myPID.prevError = myPID.error;
 
