@@ -77,7 +77,7 @@ typedef enum IRQn
   SCT_IRQn                      = 9,        /*!< SCT                                              */
   MRT_IRQn                      = 10,       /*!< MRT                                              */ 
   CMP_IRQn                      = 11,       /*!< CMP                                              */
-  WDT_IRQn                      = 12,      /*!< WDT                                              */
+  WDT_IRQn                      = 12,       /*!< WDT                                              */
   BOD_IRQn                      = 13,       /*!< BOD                                              */
   Reserved3_IRQn                = 14,       /*!< Reserved Interrupt                               */
   WKT_IRQn                      = 15,       /*!< WKT Interrupt                                    */
@@ -89,7 +89,7 @@ typedef enum IRQn
   Reserved9_IRQn                = 21,       /*!< Reserved Interrupt                               */
   Reserved10_IRQn               = 22,       /*!< Reserved Interrupt                               */    
   Reserved11_IRQn               = 23,       /*!< Reserved Interrupt                               */
-  PININT0_IRQn               	  = 24,       /*!< External Interrupt 0                             */
+  PININT0_IRQn               	= 24,       /*!< External Interrupt 0                             */
   PININT1_IRQn                  = 25,       /*!< External Interrupt 1                             */  
   PININT2_IRQn                  = 26,       /*!< External Interrupt 2                             */
   PININT3_IRQn                  = 27,       /*!< External Interrupt 3                             */

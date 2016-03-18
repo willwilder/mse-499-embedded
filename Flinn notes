@@ -1,0 +1,107 @@
+Normal Lab Report:
+
+Introduction
+Background
+Experimental Procedure
+Results
+Analysis of Results
+Discussion
+Conclusions
+
+Presentation:
+~15 Slides
+Overview of project
+PID description
+Electrical Design
+SW Design
+
+To finish the paper, outline the following sections:
+
+TESTING + ANALYSIS
+DISCUSSION
+NEXT STEPS
+CONCLUSION
+
+TESTING + ANALYSIS
+
+Combined:
+-Experimental Procedure
+-Results
+-Analysis
+
+In order to test the performance of the system I first tuned the system,
+checked step response then tested system resilience by perturbing the system
+
+Tune the PID with the resistor
+-discuss how I did the tuning
+-show effect of changing PID parameters once tuning is good
+
+Step response
+
+Perturb the system
+-water
+
+Talk about why I got the results on a point-by-point basis from each test in
+the Testing section
+
+REAL LIFE APPLICATION
+
+Added system to the boot heater, tuned as per previous process
+Show step response
+Pictures
+
+Take another look at the steady state error
+
+DISCUSSION
+
+quick redux of the design process
+review the test results
+-PID tuning
+-Perturbation
+-SP change step response
+
+Intrinsic error
+-software
+-control algorithm + PID parameters
+-hardware
+
+Extrinsic error from the environment
+
+To improve the system I would make these changes:
+-change software to calculate PID on interrupt timer
+-add support for 1/4 degree resolution
+-change the temperature sensor technology for better resolution
+
+discuss impact of changing PID period to see response
+
+put the controller in system with much larger time constant
+
+Error in temperature measurement
+
+three areas constituting design:
+electrical
+software
+control algorithm
+
+Improvements Section:
+
+evaluate the design and look for where the maximum improvement comes
+
+talk about if I need a tenth of a degree control what would i do
+differently
+
+limitations of data interchange format in 8-bit bytes.
+adding more thermocouples and taking average for large
+
+talk about how design choices impacted results of testing
+
+summarize and explain the performance level
+
+NEXT STEPS
+Add next steps and future work to the discussion section
+
+CONCLUSION
+
+Kind of like an abstract
+Evaluated design with tests and Parameters
+Performance could be improved with software etc

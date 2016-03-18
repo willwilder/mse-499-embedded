@@ -5,14 +5,14 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.crt.advproject.config.exe.release.799794972" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-					<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -64,6 +64,7 @@
 								<option id="gnu.c.link.option.paths.2023332288" name="Library search path (-L)" superClass="gnu.c.link.option.paths"/>
 								<option id="com.crt.advproject.link.crpenable.1592962700" name="Enable Code Read Protect" superClass="com.crt.advproject.link.crpenable" value="false" valueType="boolean"/>
 								<option id="com.crt.advproject.link.gcc.multicore.slave.1677156971" name="Multicore slave" superClass="com.crt.advproject.link.gcc.multicore.slave"/>
+								<option id="com.crt.advproject.link.gcc.multicore.master.userobjs.21833743" superClass="com.crt.advproject.link.gcc.multicore.master.userobjs" valueType="userObjs"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1518216665" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -86,8 +87,11 @@
 	<storageModule moduleId="com.crt.config">
 		<projectStorage>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;TargetConfig&gt;
-&lt;Properties property_0="" property_2="LPC800_4.cfx" property_3="NXP" property_4="LPC810" property_count="5" version="60100"/&gt;
-&lt;infoList vendor="NXP"&gt;&lt;info chip="LPC810" flash_driver="LPC800_4.cfx" match_id="0x0" name="LPC810" stub="crt_emu_cm3_gen"&gt;&lt;chip&gt;&lt;name&gt;LPC810&lt;/name&gt;
+&lt;Properties property_0="" property_2="LPC800_4.cfx" property_3="NXP" property_4="LPC810" property_count="5" version="70200"/&gt;
+&lt;infoList vendor="NXP"&gt;
+&lt;info chip="LPC810" flash_driver="LPC800_4.cfx" match_id="0x0" name="LPC810" stub="crt_emu_cm3_gen"&gt;
+&lt;chip&gt;
+&lt;name&gt;LPC810&lt;/name&gt;
 &lt;family&gt;LPC8xx&lt;/family&gt;
 &lt;vendor&gt;NXP (formerly Philips)&lt;/vendor&gt;
 &lt;reset board="None" core="Real" sys="Real"/&gt;
@@ -119,7 +123,8 @@
 &lt;peripheralInstance derived_from="GPIO-PORT" determined="infoFile" id="GPIO-PORT" location="0xa0000000"/&gt;
 &lt;peripheralInstance derived_from="PIN-INT" determined="infoFile" id="PIN-INT" location="0xa0004000"/&gt;
 &lt;/chip&gt;
-&lt;processor&gt;&lt;name gcc_name="cortex-m0"&gt;Cortex-M0&lt;/name&gt;
+&lt;processor&gt;
+&lt;name gcc_name="cortex-m0"&gt;Cortex-M0&lt;/name&gt;
 &lt;family&gt;Cortex-M&lt;/family&gt;
 &lt;/processor&gt;
 &lt;link href="nxp_lpc8xx_peripheral.xme" show="embed" type="simple"/&gt;

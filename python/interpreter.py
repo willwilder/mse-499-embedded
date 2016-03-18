@@ -227,7 +227,7 @@ class Miniterm(object):
         self.transmitter_thread.join()
         if not transmit_only:
             self.receiver_thread.join()
-    
+
     def _start_recipe(self):
         """Start recipe thread"""
         self._recipe_alive = True
@@ -243,7 +243,7 @@ class Miniterm(object):
         print "stopping recipe"
         #self.stop_process()
 
-        
+
     def downloadPIDParameters(self):
         reload(PID)
         print(PID.Kp)
@@ -269,7 +269,7 @@ class Miniterm(object):
         self.serial.write('\n')
         time.sleep(.1)
         self.update_setpoint(PID.SP)
-    
+
     def run_process(self):
         self.serial.write('r')
         time.sleep(.1)
@@ -280,7 +280,7 @@ class Miniterm(object):
     def stop_process(self):
         self.serial.write('r')
         time.sleep(.1)
-        self.serial.write('\n')        
+        self.serial.write('\n')
         #print "stopping process"
 
     #setpoint setter
@@ -290,8 +290,8 @@ class Miniterm(object):
         time.sleep(.1)
         self.serial.write(chr(setpoint))
         time.sleep(.1)
-        self.serial.write('\n')  
-            
+        self.serial.write('\n')
+
     def dump_port_settings(self):
         sys.stderr.write("\n--- Settings: %s  %s,%s,%s,%s\n" % (
                 self.serial.portstr,
@@ -318,12 +318,12 @@ class Miniterm(object):
         sys.stderr.write('--- data escaping: %s  linefeed: %s\n' % (
                 REPR_MODES[self.repr_mode],
                 LF_MODES[self.convert_outgoing]))
-    
+
     def csv_writer(self, data, path):
         with open(path, "a") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(data)
-    
+
     def run_recipe(self):
         #try:
         PID.currentSP = self.current_temperature - (self.current_temperature %10)+PID.rate
@@ -333,11 +333,11 @@ class Miniterm(object):
         while(self._recipe_alive and PID.currentSP <= PID.target):
             time.sleep(10)
             PID.currentSP += PID.rate
-            self.update_setpoint(PID.currentSP) 
+            self.update_setpoint(PID.currentSP)
         self.stop_process()
         print "run over"
 
-    def reader(self):   
+    def reader(self):
         try:
             while self.alive and self._reader_alive:
                 line = self.serial.readline().strip()
@@ -347,7 +347,7 @@ class Miniterm(object):
                     self.process_running = True
                 else:
                     self.process_running = False
-                
+
                 if (not self.previous_process_runnning and self.process_running):
                     print "rising edge"
                     self.current_csv_path = os.getcwd()+"/data/"+"Kp"+str(PID.Kp)+" Ki"+str(PID.Ki)+" Kd"+str(PID.Kd)+" "+str(time.time())+".csv"
@@ -357,20 +357,20 @@ class Miniterm(object):
                 elif (not self.process_running and self.previous_process_runnning):
                     print "falling edge"
                     self.csv_active = False
-                
-                self.current_temperature = int(process_data[2])
-                    
+
+                #self.current_temperature = process_data[2]
+
                 if self.csv_active:
                     self.csv_writer(process_data,self.current_csv_path)
-                    
+
                 self.previous_process_runnning = self.process_running
 
         except serial.SerialException, e:
             self.alive = False
             raise
-        
-        
-        
+
+
+
     def writer(self):
         """\
         Loop and copy console->serial until EXITCHARCTER character is
@@ -407,17 +407,20 @@ class Miniterm(object):
                         else:
                             self.stop_process()
                         self.process_running = not self.process_running
-                        print "Process State: " + (self.process_running and "Running" or "Stopped")    
-                    
+                        print "Process State: " + (self.process_running and "Running" or "Stopped")
+
                     elif c in '\x08hH?':                    # CTRL+H, h, H, ? -> Show help
                         sys.stderr.write(get_help_text())
                     elif c == '\x12':                       # CTRL+R -> Refresh PID Parameters
                         self.downloadPIDParameters()
-                        
+
                     elif c == '\x04':                       # CTRL+D -> Toggle DTR
                         self.dtr_state = not self.dtr_state
-                        self.serial.setDTR(self.dtr_state)
+                        self.serial.setRTS(self.dtr_state)
                         sys.stderr.write('--- DTR %s ---\n' % (self.dtr_state and 'active' or 'inactive'))
+                        # self.dtr_state = not self.dtr_state
+                        # self.serial.setDTR(self.dtr_state)
+                        # sys.stderr.write('--- DTR %s ---\n' % (self.dtr_state and 'active' or 'inactive'))
                     elif c == '\x05':                       # CTRL+E -> toggle local echo
                         self.echo = not self.echo
                         sys.stderr.write('--- local echo %s ---\n' % (self.echo and 'active' or 'inactive'))
@@ -429,7 +432,7 @@ class Miniterm(object):
                     menu_active = False
                 elif c == MENUCHARACTER: # next char will be for menu
                     menu_active = True
-                elif c == EXITCHARCTER: 
+                elif c == EXITCHARCTER:
                     self.stop()
                     break                                   # exit app
                 elif c == '\n':
@@ -437,9 +440,9 @@ class Miniterm(object):
                     if self.echo:
                         sys.stdout.write(c)                 # local echo is a real newline in any case
                         sys.stdout.flush()
-                
+
                 #add new commands starting here
-                                                  
+
                 else:
                     self.serial.write(b)                    # send byte
                     if self.echo:
